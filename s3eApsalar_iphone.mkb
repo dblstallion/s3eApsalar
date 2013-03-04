@@ -1,0 +1,15 @@
+#!/usr/bin/env mkb
+# Builder mkb file for the s3eApsalar extension on iphone
+platform IPHONE
+
+includepath lib/iOS-SDK-5.0.0U
+
+options
+{
+    lib
+    output-name="lib/iphone/libs3eApsalar.a"
+    output-name-debug="lib/iphone/libs3eApsalar_d.a"
+}
+define S3E_BUILD_EXT
+
+subproject s3eApsalar_build
