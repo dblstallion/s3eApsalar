@@ -4,38 +4,42 @@
 #include "IwDebug.h"
 #include "s3eExt.h"
 
-const char *yourApiKey = "<fill this in>";
-const char *yourApiSecret = "<fill this in>";
+const char *yourApiKey = "s3eApsalar";
+const char *yourApiSecret = "6TWtvU2K";
 
 void LogEvent();
 
 //Example Main
 void ExampleInit()
 {
-    AddButton("Log Event", 200, 200, 200, 200, s3eKeyL, LogEvent);
+    s3eDebugOutputString("Booting s3eApsalar example");
 
     if (!s3eApsalarAvailable())
     {
-        DisplayMessage(s3eExtGetErrorString());
+        s3eDebugOutputString(s3eExtGetErrorString());
         return;
     }
 
-    s3eApStart(yourApiKey, yourApiSecret);
-}
+    s3eDebugOutputString("Successfully loaded s3eApsalar extension");
 
-void LogEvent()
-{
+    s3eDebugOutputString("Starting Apsalar session");
+    s3eApStart(yourApiKey, yourApiSecret);
+
+    s3eDebugOutputString("Apsalar session started");
+
     s3eApLogEvent("TestEvent");
-    DisplayMessage("TestEvent Logged");
+    s3eDebugOutputString("TestEvent logged");
 }
 
 bool ExampleUpdate()
 {
+    s3eDebugOutputString("Updating");
     return true;
 }
 
 void ExampleRender()
 {
+    s3eDebugOutputString("Rendering");
 }
 
 void ExampleShutDown()

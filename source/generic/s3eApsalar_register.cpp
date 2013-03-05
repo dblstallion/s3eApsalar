@@ -24,6 +24,18 @@ extern void s3eApsalarTerminate();
 // code is oftern build standalone, outside the main loader build.
 #if defined I3D_OS_IPHONE || defined I3D_OS_OSX || defined I3D_OS_LINUX || defined I3D_OS_WINDOWS
 
+static void s3eApStart_wrap(const char* apiKey, const char* apiSecret)
+{
+    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApStart"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApStart, 2, apiKey, apiSecret);
+}
+
+static void s3eApRestart_wrap(const char* apiKey, const char* apiSecret)
+{
+    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApRestart"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApRestart, 2, apiKey, apiSecret);
+}
+
 static bool s3eApStarted_wrap()
 {
     IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApStarted"));
@@ -42,6 +54,8 @@ static void s3eApLogEvent_wrap(const char* name)
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEvent, 1, name);
 }
 
+#define s3eApStart s3eApStart_wrap
+#define s3eApRestart s3eApRestart_wrap
 #define s3eApStarted s3eApStarted_wrap
 #define s3eApEnd s3eApEnd_wrap
 #define s3eApLogEvent s3eApLogEvent_wrap
