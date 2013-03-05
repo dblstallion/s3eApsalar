@@ -2,6 +2,7 @@
 #include "s3eOSReadString.h"
 #include "s3eApsalar.h"
 #include "IwDebug.h"
+#include "s3eExt.h"
 
 const char *yourApiKey = "<fill this in>";
 const char *yourApiSecret = "<fill this in>";
@@ -15,7 +16,7 @@ void ExampleInit()
 
     if (!s3eApsalarAvailable())
     {
-        DisplayMessage("Extension Not Available");
+        DisplayMessage(s3eExtGetErrorString());
         return;
     }
 

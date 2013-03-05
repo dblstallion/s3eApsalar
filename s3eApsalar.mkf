@@ -36,8 +36,9 @@ if {{ not defined IW_MKF_IWCRT}}
 #lines will cause the extension builder to re-output this section.
 deployments
 {
-    #iphone-link-opts="-framework X" #Use this to bring in any additional link options needed
-	iphone-link-lib="iOS-SDK-5.0.0U/libApsalar"
+    iphone-link-opts="-framework SystemConfiguration -framework Security -lsqlite3.0" #Use this to bring in any additional link options needed
+	iphone-link-lib="Apsalar"
     iphone-link-lib="s3eApsalar"
     iphone-link-libdir="lib/iphone"
+	iphone-link-libdir="lib/iphone/iOS-SDK-5.0.0U"
 }
