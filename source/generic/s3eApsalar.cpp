@@ -23,14 +23,14 @@ void s3eApsalarTerminate()
     s3eApsalarTerminate_platform();
 }
 
-void s3eApStart(const char *apiKey, const char *apiSecret)
+void s3eApStart(const char* apiKey, const char* apiSecret)
 {
-	s3eApStart_platform(*apiKey, *apiSecret);
+	s3eApStart_platform(apiKey, apiSecret);
 }
 
-void s3eApRestart(const char *apiKey, const char *apiSecret)
+void s3eApRestart(const char* apiKey, const char* apiSecret)
 {
-	s3eApRestart_platform(*apiKey, *apiSecret);
+	s3eApRestart_platform(apiKey, apiSecret);
 }
 
 bool s3eApStarted()
@@ -43,7 +43,7 @@ void s3eApEnd()
 	s3eApEnd_platform();
 }
 
-void s3eApLogEvent(const char *name)
+void s3eApLogEvent(const char* name)
 {
-	s3eApLogEvent_platform(*name);
+	s3eApLogEvent_platform(name);
 }

@@ -39,15 +39,15 @@ s3eBool s3eApsalarAvailable();
 /**
  * Start an apsalar session using apiKey and apiSecret
  */
-void s3eApStart(const char *apiKey, const char *apiSecret);
+void s3eApStart(const char* apiKey, const char* apiSecret);
 
-void s3eApRestart(const char *apiKey, const char *apiSecret);
+void s3eApRestart(const char* apiKey, const char* apiSecret);
 
 bool s3eApStarted();
 
 void s3eApEnd();
 
-void s3eApLogEvent(const char *name);
+void s3eApLogEvent(const char* name);
 
 S3E_END_C_DECL
 

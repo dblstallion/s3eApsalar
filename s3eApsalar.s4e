@@ -15,8 +15,8 @@ functions:
 /**
  * Start an apsalar session using apiKey and apiSecret
  */
-void s3eApStart(const char *apiKey, const char *apiSecret)
-void s3eApRestart(const char *apiKey, const char *apiSecret)
+void s3eApStart(const char* apiKey, const char* apiSecret)
+void s3eApRestart(const char* apiKey, const char* apiSecret)
 bool s3eApStarted() S3E_FALSE run_on_os_thread
 void s3eApEnd() run_on_os_thread
-void s3eApLogEvent(const char *name) run_on_os_thread
+void s3eApLogEvent(const char* name) run_on_os_thread

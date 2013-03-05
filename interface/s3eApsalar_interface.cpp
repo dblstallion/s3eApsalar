@@ -13,11 +13,11 @@
 /**
  * Definitions for functions types passed to/from s3eExt interface
  */
-typedef       void(*s3eApStart_t)(const char *apiKey, const char *apiSecret);
-typedef       void(*s3eApRestart_t)(const char *apiKey, const char *apiSecret);
+typedef       void(*s3eApStart_t)(const char* apiKey, const char* apiSecret);
+typedef       void(*s3eApRestart_t)(const char* apiKey, const char* apiSecret);
 typedef       bool(*s3eApStarted_t)();
 typedef       void(*s3eApEnd_t)();
-typedef       void(*s3eApLogEvent_t)(const char *name);
+typedef       void(*s3eApLogEvent_t)(const char* name);
 
 /**
  * struct that gets filled in by s3eApsalarRegister
@@ -74,7 +74,7 @@ s3eBool s3eApsalarAvailable()
     return g_GotExt ? S3E_TRUE : S3E_FALSE;
 }
 
-void s3eApStart(const char *apiKey, const char *apiSecret)
+void s3eApStart(const char* apiKey, const char* apiSecret)
 {
     IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar[0] func: s3eApStart"));
 
@@ -87,7 +87,7 @@ void s3eApStart(const char *apiKey, const char *apiSecret)
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
-    g_Ext.m_s3eApStart(*apiKey, *apiSecret);
+    g_Ext.m_s3eApStart(apiKey, apiSecret);
 
 #ifdef __mips
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
@@ -96,7 +96,7 @@ void s3eApStart(const char *apiKey, const char *apiSecret)
     return;
 }
 
-void s3eApRestart(const char *apiKey, const char *apiSecret)
+void s3eApRestart(const char* apiKey, const char* apiSecret)
 {
     IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar[1] func: s3eApRestart"));
 
@@ -109,7 +109,7 @@ void s3eApRestart(const char *apiKey, const char *apiSecret)
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
-    g_Ext.m_s3eApRestart(*apiKey, *apiSecret);
+    g_Ext.m_s3eApRestart(apiKey, apiSecret);
 
 #ifdef __mips
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
@@ -162,7 +162,7 @@ void s3eApEnd()
     return;
 }
 
-void s3eApLogEvent(const char *name)
+void s3eApLogEvent(const char* name)
 {
     IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar[4] func: s3eApLogEvent"));
 
@@ -175,7 +175,7 @@ void s3eApLogEvent(const char *name)
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
-    g_Ext.m_s3eApLogEvent(*name);
+    g_Ext.m_s3eApLogEvent(name);
 
 #ifdef __mips
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);

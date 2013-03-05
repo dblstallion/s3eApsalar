@@ -23,12 +23,12 @@ void s3eApsalarTerminate_platform()
 
 void s3eApStart_platform(const char *apiKey, const char *apiSecret)
 {
-	[Apsalar startSession:[NSString initWithUTF8String:apiKey] withKey:[NSString initWithUTF8String:apiSecret]];
+	[Apsalar startSession:[NSString stringWithUTF8String:apiKey] withKey:[NSString stringWithUTF8String:apiSecret]];
 }
 
 void s3eApRestart_platform(const char *apiKey, const char *apiSecret)
 {
-	[Apsalar reStartSession:[NSString initWithUTF8String:apiKey] withKey:[NSString initWithUTF8String:apiSecret]];
+	[Apsalar reStartSession:[NSString stringWithUTF8String:apiKey] withKey:[NSString stringWithUTF8String:apiSecret]];
 }
 
 bool s3eApStarted_platform()
@@ -43,5 +43,5 @@ void s3eApEnd_platform()
 
 void s3eApLogEvent_platform(const char *name)
 {
-	[Apsalar event:[NSString initWithUTF8String:name]];
+	[Apsalar event:[NSString stringWithUTF8String:name]];
 }

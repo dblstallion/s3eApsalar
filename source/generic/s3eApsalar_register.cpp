@@ -36,10 +36,10 @@ static void s3eApEnd_wrap()
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApEnd, 0);
 }
 
-static void s3eApLogEvent_wrap(const char *name)
+static void s3eApLogEvent_wrap(const char* name)
 {
     IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApLogEvent"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEvent, 1, *name);
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEvent, 1, name);
 }
 
 #define s3eApStarted s3eApStarted_wrap
