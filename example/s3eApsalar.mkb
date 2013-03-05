@@ -1,0 +1,17 @@
+#!/usr/bin/env mkb
+files
+{
+    s3eApsalar.cpp
+}
+
+subprojects
+{
+    s3eApsalar
+	../examples/ExamplesCore
+}
+#### AUTO GENERATED deployment settings from DeployTool.exe. Do not edit below this line ####
+deployments
+{
+	["Default"]
+	android-manifest='AndroidManifest.xml'
+}
