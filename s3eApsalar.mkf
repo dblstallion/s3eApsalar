@@ -37,6 +37,7 @@ if {{ not defined IW_MKF_IWCRT}}
 deployments
 {
     #iphone-link-opts="-framework X" #Use this to bring in any additional link options needed
+	iphone-link-lib="iOS-SDK-5.0.0U/libApsalar"
     iphone-link-lib="s3eApsalar"
     iphone-link-libdir="lib/iphone"
 }

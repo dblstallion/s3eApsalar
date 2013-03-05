@@ -2,7 +2,7 @@
 # Builder mkb file for the s3eApsalar extension on iphone
 platform IPHONE
 
-includepath lib/iOS-SDK-5.0.0U
+includepath lib/iphone/iOS-SDK-5.0.0U
 
 options
 {
