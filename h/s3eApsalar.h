@@ -27,6 +27,8 @@ typedef enum {
     s3eApTriggerResultUnknown,        // New trigger, not yet registered
     s3eApTriggerResultCurrentlyActive // A trigger is already active
 } s3eApTriggerResult;
+
+struct s3eApDict;
 // \cond HIDDEN_DEFINES
 S3E_BEGIN_C_DECL
 // \endcond
@@ -48,6 +50,21 @@ bool s3eApStarted();
 void s3eApEnd();
 
 void s3eApLogEvent(const char* name);
+
+/**
+ * Functions to help create a dictionary
+ */
+s3eApDict* s3eApDictCreate();
+
+void s3eApDictAddString(s3eApDict* dict, const char* key, const char* value);
+
+void s3eApDictAddInt(s3eApDict* dict, const char* key, int value);
+
+void s3eApDictAddFloat(s3eApDict* dict, const char* key, float value);
+
+void s3eApDictAddDict(s3eApDict* dict, const char* key, s3eApDict* value);
+
+void s3eApLogEventWithArgs(const char* name, s3eApDict* dict);
 
 S3E_END_C_DECL
 

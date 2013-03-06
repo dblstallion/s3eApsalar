@@ -54,28 +54,41 @@ static void s3eApLogEvent_wrap(const char* name)
     s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEvent, 1, name);
 }
 
+static void s3eApLogEventWithArgs_wrap(const char* name, s3eApDict* dict)
+{
+    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApLogEventWithArgs"));
+    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEventWithArgs, 2, name, dict);
+}
+
 #define s3eApStart s3eApStart_wrap
 #define s3eApRestart s3eApRestart_wrap
 #define s3eApStarted s3eApStarted_wrap
 #define s3eApEnd s3eApEnd_wrap
 #define s3eApLogEvent s3eApLogEvent_wrap
+#define s3eApLogEventWithArgs s3eApLogEventWithArgs_wrap
 
 #endif
 
 void s3eApsalarRegisterExt()
 {
     /* fill in the function pointer struct for this extension */
-    void* funcPtrs[5];
+    void* funcPtrs[11];
     funcPtrs[0] = (void*)s3eApStart;
     funcPtrs[1] = (void*)s3eApRestart;
     funcPtrs[2] = (void*)s3eApStarted;
     funcPtrs[3] = (void*)s3eApEnd;
     funcPtrs[4] = (void*)s3eApLogEvent;
+    funcPtrs[5] = (void*)s3eApDictCreate;
+    funcPtrs[6] = (void*)s3eApDictAddString;
+    funcPtrs[7] = (void*)s3eApDictAddInt;
+    funcPtrs[8] = (void*)s3eApDictAddFloat;
+    funcPtrs[9] = (void*)s3eApDictAddDict;
+    funcPtrs[10] = (void*)s3eApLogEventWithArgs;
 
     /*
      * Flags that specify the extension's use of locking and stackswitching
      */
-    int flags[5] = { 0 };
+    int flags[11] = { 0 };
 
     /*
      * Register the extension

@@ -47,3 +47,33 @@ void s3eApLogEvent(const char* name)
 {
 	s3eApLogEvent_platform(name);
 }
+
+s3eApDict* s3eApDictCreate()
+{
+	return s3eApDictCreate_platform();
+}
+
+void s3eApDictAddString(s3eApDict* dict, const char* key, const char* value)
+{
+	s3eApDictAddString_platform(dict, key, value);
+}
+
+void s3eApDictAddInt(s3eApDict* dict, const char* key, int value)
+{
+	s3eApDictAddInt_platform(dict, key, value);
+}
+
+void s3eApDictAddFloat(s3eApDict* dict, const char* key, float value)
+{
+	s3eApDictAddFloat_platform(dict, key, value);
+}
+
+void s3eApDictAddDict(s3eApDict* dict, const char* key, s3eApDict* value)
+{
+	s3eApDictAddDict_platform(dict, key, value);
+}
+
+void s3eApLogEventWithArgs(const char* name, s3eApDict* dict)
+{
+	s3eApLogEventWithArgs_platform(name, dict);
+}

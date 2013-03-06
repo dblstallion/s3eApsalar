@@ -28,6 +28,25 @@ void logEvent()
     s3eDebugOutputString("TestEvent logged");
 }
 
+void logEventWithArgs()
+{
+    s3eApDict *args = s3eApDictCreate();
+
+    s3eApDictAddString(args, "string", "some string value");
+    s3eApDictAddInt(args, "int", 42);
+    s3eApDictAddFloat(args, "float", 3.1416f);
+
+    s3eApDict *subargs = s3eApDictCreate();
+    s3eApDictAddString(subargs, "subString", "my sub string");
+    s3eApDictAddInt(subargs, "subInt", 18);
+
+    s3eApDictAddDict(args, "dict", subargs);
+
+    s3eApLogEventWithArgs("ArgEvent", args);
+
+    s3eDebugOutputString("ArgEvent logged");
+}
+
 void shutdownApsalar()
 {
     s3eApEnd();
@@ -39,6 +58,10 @@ void touchEvent(s3ePointerTouchEvent *event)
     if(event->m_Pressed)
     {
         logEvent();
+    }
+    else
+    {
+        logEventWithArgs();
     }
 }
 

@@ -42,15 +42,27 @@ void s3eApsalarTerminate();
  * Platform-specific termination, implemented on each platform
  */
 void s3eApsalarTerminate_platform();
-void s3eApStart_platform(const char *apiKey, const char *apiSecret);
+void s3eApStart_platform(const char* apiKey, const char* apiSecret);
 
-void s3eApRestart_platform(const char *apiKey, const char *apiSecret);
+void s3eApRestart_platform(const char* apiKey, const char* apiSecret);
 
 bool s3eApStarted_platform();
 
 void s3eApEnd_platform();
 
-void s3eApLogEvent_platform(const char *name);
+void s3eApLogEvent_platform(const char* name);
+
+s3eApDict* s3eApDictCreate_platform();
+
+void s3eApDictAddString_platform(s3eApDict* dict, const char* key, const char* value);
+
+void s3eApDictAddInt_platform(s3eApDict* dict, const char* key, int value);
+
+void s3eApDictAddFloat_platform(s3eApDict* dict, const char* key, float value);
+
+void s3eApDictAddDict_platform(s3eApDict* dict, const char* key, s3eApDict* value);
+
+void s3eApLogEventWithArgs_platform(const char* name, s3eApDict* dict);
 
 
 #endif /* !S3EAPSALAR_INTERNAL_H */

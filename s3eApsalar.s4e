@@ -11,6 +11,8 @@ typedef enum {
     s3eApTriggerResultCurrentlyActive // A trigger is already active
 } s3eApTriggerResult;
 
+struct s3eApDict;
+
 functions:
 /**
  * Start an apsalar session using apiKey and apiSecret
@@ -20,3 +22,14 @@ void s3eApRestart(const char* apiKey, const char* apiSecret) run_on_os_thread
 bool s3eApStarted() S3E_FALSE run_on_os_thread
 void s3eApEnd() run_on_os_thread
 void s3eApLogEvent(const char* name) run_on_os_thread
+
+/**
+ * Functions to help create a dictionary
+ */
+s3eApDict* s3eApDictCreate() NULL
+void s3eApDictAddString(s3eApDict* dict, const char* key, const char* value)
+void s3eApDictAddInt(s3eApDict* dict, const char* key, int value)
+void s3eApDictAddFloat(s3eApDict* dict, const char* key, float value)
+void s3eApDictAddDict(s3eApDict* dict, const char* key, s3eApDict* value)
+
+void s3eApLogEventWithArgs(const char* name, s3eApDict* dict) run_on_os_thread
