@@ -40,5 +40,5 @@ deployments
 	iphone-link-lib="Apsalar"
     iphone-link-lib="s3eApsalar"
     iphone-link-libdir="lib/iphone"
-	iphone-link-libdir="lib/iphone/iOS-SDK-5.0.0U"
+	iphone-link-libdir="lib/iphone/iOS-SDK-6.0.2"
 }

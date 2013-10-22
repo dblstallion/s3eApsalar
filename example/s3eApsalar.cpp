@@ -5,8 +5,8 @@
 #include "s3eExt.h"
 #include "s3ePointer.h"
 
-const char *yourApiKey = "s3eApsalar";
-const char *yourApiSecret = "6TWtvU2K";
+const char *yourApiKey = "vhippoman";
+const char *yourApiSecret = "JaZBQZOK";
 
 void initApsalar()
 {
