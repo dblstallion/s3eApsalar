@@ -7,6 +7,7 @@
  * be overwritten (unless --force is specified) and is intended to be modified.
  */
 #include "s3eApsalar_internal.h"
+#include "IwDebug.h"
 
 #import "Apsalar.h"
 
@@ -14,6 +15,8 @@ s3eResult s3eApsalarInit_platform()
 {
     [Apsalar setBatchesEvents:YES];
     [Apsalar setBatchInterval:10];
+    
+    IwTrace(APSALAR_VERBOSE, ("Apsalar ID: %s", [[Apsalar apsalarID] UTF8String]));
     // Add any platform-specific initialisation code here
     return S3E_RESULT_SUCCESS;
 }
