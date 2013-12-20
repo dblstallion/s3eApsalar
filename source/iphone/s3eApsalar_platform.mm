@@ -10,10 +10,10 @@
 
 #import "Apsalar.h"
 
-struct s3eApDict {}; // Empty struct used as a marker for a dictionary
-
 s3eResult s3eApsalarInit_platform()
 {
+    [Apsalar setBatchesEvents:YES];
+    [Apsalar setBatchInterval:10];
     // Add any platform-specific initialisation code here
     return S3E_RESULT_SUCCESS;
 }
@@ -25,12 +25,20 @@ void s3eApsalarTerminate_platform()
 
 void s3eApStart_platform(const char *apiKey, const char *apiSecret)
 {
-	[Apsalar startSession:[NSString stringWithUTF8String:apiKey] withKey:[NSString stringWithUTF8String:apiSecret]];
+    NSString *nsAPIKey = [[NSString alloc] initWithUTF8String:apiKey];
+    NSString *nsAPISecret = [[NSString alloc] initWithUTF8String:apiSecret];
+	[Apsalar startSession:nsAPIKey withKey:nsAPISecret];
+    [nsAPISecret release];
+    [nsAPIKey release];
 }
 
 void s3eApRestart_platform(const char *apiKey, const char *apiSecret)
 {
-	[Apsalar reStartSession:[NSString stringWithUTF8String:apiKey] withKey:[NSString stringWithUTF8String:apiSecret]];
+    NSString *nsAPIKey = [[NSString alloc] initWithUTF8String:apiKey];
+    NSString *nsAPISecret = [[NSString alloc] initWithUTF8String:apiSecret];
+	[Apsalar reStartSession:nsAPIKey withKey:nsAPISecret];
+    [nsAPISecret release];
+    [nsAPIKey release];
 }
 
 bool s3eApStarted_platform()
@@ -45,41 +53,61 @@ void s3eApEnd_platform()
 
 void s3eApLogEvent_platform(const char *name)
 {
-	[Apsalar event:[NSString stringWithUTF8String:name]];
+    NSString *nsName = [[NSString alloc] initWithUTF8String:name];
+	[Apsalar event:nsName];
+    [nsName release];
 }
 
 s3eApDict* s3eApDictCreate_platform()
 {
-	return (s3eApDict*)[NSMutableDictionary dictionary];
+	return (s3eApDict*)[[NSMutableDictionary alloc] init];
 }
 
 void s3eApDictAddString_platform(s3eApDict* dict, const char* key, const char* value)
 {
 	NSMutableDictionary *d = (NSMutableDictionary *)dict;
-	[d setObject:[NSString stringWithUTF8String:value] forKey:[NSString stringWithUTF8String:key]];
+    NSString *nsKey = [[NSString alloc] initWithUTF8String:key];
+    NSString *nsValue = [[NSString alloc] initWithUTF8String:value];
+	[d setObject:nsValue forKey:nsKey];
+    [nsValue release];
+    [nsKey release];
 }
 
 void s3eApDictAddInt_platform(s3eApDict* dict, const char* key, int value)
 {
 	NSMutableDictionary *d = (NSMutableDictionary *)dict;
-	[d setObject:[NSNumber numberWithInt:value] forKey:[NSString stringWithUTF8String:key]];
+    NSString *nsKey = [[NSString alloc] initWithUTF8String:key];
+    NSNumber *nsValue = [[NSNumber alloc] initWithInt:value];
+	[d setObject:nsValue forKey:nsKey];
+    [nsValue release];
+    [nsKey release];
 }
 
 void s3eApDictAddFloat_platform(s3eApDict* dict, const char* key, float value)
 {
 	NSMutableDictionary *d = (NSMutableDictionary *)dict;
-	[d setObject:[NSNumber numberWithFloat:value] forKey:[NSString stringWithUTF8String:key]];
+    NSString *nsKey = [[NSString alloc] initWithUTF8String:key];
+    NSNumber *nsValue = [[NSNumber alloc] initWithFloat:value];
+	[d setObject:nsValue forKey:nsKey];
+    [nsValue release];
+    [nsKey release];
 }
 
 void s3eApDictAddDict_platform(s3eApDict* dict, const char* key, s3eApDict* value)
 {
 	NSMutableDictionary *d = (NSMutableDictionary *)dict;
 	NSMutableDictionary *v = (NSMutableDictionary *)value;
-	[d setObject:v forKey:[NSString stringWithUTF8String:key]];
+    NSString *nsKey = [[NSString alloc] initWithUTF8String:key];
+	[d setObject:v forKey:nsKey];
+    [nsKey release];
+    [v release];
 }
 
 void s3eApLogEventWithArgs_platform(const char *name, s3eApDict* dict)
 {
 	NSMutableDictionary *args = (NSMutableDictionary *)dict;
-	[Apsalar event:[NSString stringWithUTF8String:name] withArgs:args];
+    NSString *nsName = [[NSString alloc] initWithUTF8String:name];
+	[Apsalar event:nsName withArgs:args];
+    [nsName release];
+    [args release];
 }

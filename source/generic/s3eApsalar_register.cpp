@@ -10,7 +10,6 @@
  * to nothing if this extension is not enabled in the loader
  * at build time.
  */
-#include "IwDebug.h"
 #include "s3eApsalar_autodefs.h"
 #include "s3eEdk.h"
 #include "s3eApsalar.h"
@@ -18,56 +17,6 @@
 extern s3eResult s3eApsalarInit();
 extern void s3eApsalarTerminate();
 
-
-// On platforms that use a seperate UI/OS thread we can autowrap functions
-// here.   Note that we can't use the S3E_USE_OS_THREAD define since this
-// code is oftern build standalone, outside the main loader build.
-#if defined I3D_OS_IPHONE || defined I3D_OS_OSX || defined I3D_OS_LINUX || defined I3D_OS_WINDOWS
-
-static void s3eApStart_wrap(const char* apiKey, const char* apiSecret)
-{
-    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApStart"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApStart, 2, apiKey, apiSecret);
-}
-
-static void s3eApRestart_wrap(const char* apiKey, const char* apiSecret)
-{
-    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApRestart"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApRestart, 2, apiKey, apiSecret);
-}
-
-static bool s3eApStarted_wrap()
-{
-    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApStarted"));
-    return (bool)(intptr_t)s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApStarted, 0);
-}
-
-static void s3eApEnd_wrap()
-{
-    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApEnd"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApEnd, 0);
-}
-
-static void s3eApLogEvent_wrap(const char* name)
-{
-    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApLogEvent"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEvent, 1, name);
-}
-
-static void s3eApLogEventWithArgs_wrap(const char* name, s3eApDict* dict)
-{
-    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar func on main thread: s3eApLogEventWithArgs"));
-    s3eEdkThreadRunOnOS((s3eEdkThreadFunc)s3eApLogEventWithArgs, 2, name, dict);
-}
-
-#define s3eApStart s3eApStart_wrap
-#define s3eApRestart s3eApRestart_wrap
-#define s3eApStarted s3eApStarted_wrap
-#define s3eApEnd s3eApEnd_wrap
-#define s3eApLogEvent s3eApLogEvent_wrap
-#define s3eApLogEventWithArgs s3eApLogEventWithArgs_wrap
-
-#endif
 
 void s3eApsalarRegisterExt()
 {

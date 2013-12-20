@@ -18,16 +18,6 @@
 
 #include "s3eTypes.h"
 
-typedef enum {
-    s3eApTriggerResultSuccess,        // An overlay was loaded
-    s3eApTriggerResultNotShown,       // Overlay not shown, unknown reason
-    s3eApTriggerResultNotReady,       // Apsalar session not started
-    s3eApTriggerResultNoConnectivity, // No connectivity needed to do overlay
-    s3eApTriggerResultNoRule,         // No rules connected to this trigger 
-    s3eApTriggerResultUnknown,        // New trigger, not yet registered
-    s3eApTriggerResultCurrentlyActive // A trigger is already active
-} s3eApTriggerResult;
-
 struct s3eApDict;
 // \cond HIDDEN_DEFINES
 S3E_BEGIN_C_DECL
