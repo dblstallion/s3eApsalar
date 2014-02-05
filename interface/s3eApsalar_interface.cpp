@@ -11,10 +11,12 @@
 #include "s3eApsalar.h"
 
 
-// For MIPs (and WP8) platform we do not have asm code for stack switching 
+#ifndef S3E_EXT_SKIP_LOADER_CALL_LOCK
+// For MIPs (and WP8) platform we do not have asm code for stack switching
 // implemented. So we make LoaderCallStart call manually to set GlobalLock
 #if defined __mips || defined S3E_ANDROID_X86 || (defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP))
-#define LOADER_CALL
+#define LOADER_CALL_LOCK
+#endif
 #endif
 
 /**
@@ -31,6 +33,7 @@ typedef       void(*s3eApDictAddInt_t)(s3eApDict* dict, const char* key, int val
 typedef       void(*s3eApDictAddFloat_t)(s3eApDict* dict, const char* key, float value);
 typedef       void(*s3eApDictAddDict_t)(s3eApDict* dict, const char* key, s3eApDict* value);
 typedef       void(*s3eApLogEventWithArgs_t)(const char* name, s3eApDict* dict);
+typedef       void(*s3eApSetFBAppId_t)(const char* appId);
 
 /**
  * struct that gets filled in by s3eApsalarRegister
@@ -48,6 +51,7 @@ typedef struct s3eApsalarFuncs
     s3eApDictAddFloat_t m_s3eApDictAddFloat;
     s3eApDictAddDict_t m_s3eApDictAddDict;
     s3eApLogEventWithArgs_t m_s3eApLogEventWithArgs;
+    s3eApSetFBAppId_t m_s3eApSetFBAppId;
 } s3eApsalarFuncs;
 
 static s3eApsalarFuncs g_Ext;
@@ -64,7 +68,7 @@ static bool _extLoad()
             g_GotExt = true;
         else
             s3eDebugAssertShow(S3E_MESSAGE_CONTINUE_STOP_IGNORE,                 "error loading extension: s3eApsalar");
-            
+
         g_TriedExt = true;
         g_TriedNoMsgExt = true;
     }
@@ -100,13 +104,13 @@ void s3eApStart(const char* apiKey, const char* apiSecret)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApStart(apiKey, apiSecret);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -120,13 +124,13 @@ void s3eApRestart(const char* apiKey, const char* apiSecret)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApRestart(apiKey, apiSecret);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -140,13 +144,13 @@ bool s3eApStarted()
     if (!_extLoad())
         return S3E_FALSE;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     bool ret = g_Ext.m_s3eApStarted();
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -160,13 +164,13 @@ void s3eApEnd()
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApEnd();
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -180,13 +184,13 @@ void s3eApLogEvent(const char* name)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApLogEvent(name);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -200,13 +204,13 @@ s3eApDict* s3eApDictCreate()
     if (!_extLoad())
         return NULL;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     s3eApDict* ret = g_Ext.m_s3eApDictCreate();
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -220,13 +224,13 @@ void s3eApDictAddString(s3eApDict* dict, const char* key, const char* value)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApDictAddString(dict, key, value);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -240,13 +244,13 @@ void s3eApDictAddInt(s3eApDict* dict, const char* key, int value)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApDictAddInt(dict, key, value);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -260,13 +264,13 @@ void s3eApDictAddFloat(s3eApDict* dict, const char* key, float value)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApDictAddFloat(dict, key, value);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -280,13 +284,13 @@ void s3eApDictAddDict(s3eApDict* dict, const char* key, s3eApDict* value)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApDictAddDict(dict, key, value);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 
@@ -300,13 +304,33 @@ void s3eApLogEventWithArgs(const char* name, s3eApDict* dict)
     if (!_extLoad())
         return;
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
 #endif
 
     g_Ext.m_s3eApLogEventWithArgs(name, dict);
 
-#ifdef LOADER_CALL
+#ifdef LOADER_CALL_LOCK
+    s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
+#endif
+
+    return;
+}
+
+void s3eApSetFBAppId(const char* appId)
+{
+    IwTrace(APSALAR_VERBOSE, ("calling s3eApsalar[11] func: s3eApSetFBAppId"));
+
+    if (!_extLoad())
+        return;
+
+#ifdef LOADER_CALL_LOCK
+    s3eDeviceLoaderCallStart(S3E_TRUE, NULL);
+#endif
+
+    g_Ext.m_s3eApSetFBAppId(appId);
+
+#ifdef LOADER_CALL_LOCK
     s3eDeviceLoaderCallDone(S3E_TRUE, NULL);
 #endif
 

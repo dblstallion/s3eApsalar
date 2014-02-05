@@ -56,6 +56,8 @@ void s3eApDictAddDict(s3eApDict* dict, const char* key, s3eApDict* value);
 
 void s3eApLogEventWithArgs(const char* name, s3eApDict* dict);
 
+void s3eApSetFBAppId(const char* appId);
+
 S3E_END_C_DECL
 
 #endif /* !S3E_EXT_APSALAR_H */

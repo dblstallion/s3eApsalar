@@ -64,5 +64,7 @@ void s3eApDictAddDict_platform(s3eApDict* dict, const char* key, s3eApDict* valu
 
 void s3eApLogEventWithArgs_platform(const char* name, s3eApDict* dict);
 
+void s3eApSetFBAppId_platform(const char* appId);
+
 
 #endif /* !S3EAPSALAR_INTERNAL_H */

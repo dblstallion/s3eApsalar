@@ -23,3 +23,5 @@ void s3eApDictAddFloat(s3eApDict* dict, const char* key, float value)
 void s3eApDictAddDict(s3eApDict* dict, const char* key, s3eApDict* value)
 
 void s3eApLogEventWithArgs(const char* name, s3eApDict* dict)
+
+void s3eApSetFBAppId(const char* appId)

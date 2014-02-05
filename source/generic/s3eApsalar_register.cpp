@@ -21,7 +21,7 @@ extern void s3eApsalarTerminate();
 void s3eApsalarRegisterExt()
 {
     /* fill in the function pointer struct for this extension */
-    void* funcPtrs[11];
+    void* funcPtrs[12];
     funcPtrs[0] = (void*)s3eApStart;
     funcPtrs[1] = (void*)s3eApRestart;
     funcPtrs[2] = (void*)s3eApStarted;
@@ -33,11 +33,12 @@ void s3eApsalarRegisterExt()
     funcPtrs[8] = (void*)s3eApDictAddFloat;
     funcPtrs[9] = (void*)s3eApDictAddDict;
     funcPtrs[10] = (void*)s3eApLogEventWithArgs;
+    funcPtrs[11] = (void*)s3eApSetFBAppId;
 
     /*
      * Flags that specify the extension's use of locking and stackswitching
      */
-    int flags[11] = { 0 };
+    int flags[12] = { 0 };
 
     /*
      * Register the extension

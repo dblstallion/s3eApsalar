@@ -1,0 +1,19 @@
+<activity android:name="com.apsalar.sdk.Activity"
+   android:configChanges="keyboardHidden|orientation"
+   android:label="Apsalar">
+</activity>
+
+<receiver android:exported="true" android:name="com.apsalar.sdk.ApsalarReceiver">
+      <intent-filter>
+           <action android:name="com.android.vending.INSTALL_REFERRER"></action>
+      </intent-filter>
+</receiver>
+
+<intent-filter>
+   <action android:name="android.intent.action.VIEW" />
+   <category android:name="android.intent.category.BROWSABLE" />
+   <category android:name="android.intent.category.DEFAULT" />
+   <data android:scheme="http"
+         android:host="e.apsalar.com"
+         android:pathPrefix="/api/v1/appstore/${PACKAGENAME}" />
+</intent-filter>

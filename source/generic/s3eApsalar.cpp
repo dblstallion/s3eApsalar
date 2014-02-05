@@ -77,3 +77,8 @@ void s3eApLogEventWithArgs(const char* name, s3eApDict* dict)
 {
 	s3eApLogEventWithArgs_platform(name, dict);
 }
+
+void s3eApSetFBAppId(const char* appId)
+{
+	s3eApSetFBAppId_platform(appId);
+}

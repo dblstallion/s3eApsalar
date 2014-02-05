@@ -114,3 +114,7 @@ void s3eApLogEventWithArgs_platform(const char *name, s3eApDict* dict)
     [nsName release];
     [args release];
 }
+
+void s3eApSetFBAppId_platform(const char *appId)
+{
+}
