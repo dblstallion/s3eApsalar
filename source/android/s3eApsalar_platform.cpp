@@ -129,7 +129,9 @@ void s3eApStart_platform(const char* apiKey, const char* apiSecret)
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring apiKey_jstr = env->NewStringUTF(apiKey);
     jstring apiSecret_jstr = env->NewStringUTF(apiSecret);
+    
     env->CallVoidMethod(g_Obj, g_s3eApStart, apiKey_jstr, apiSecret_jstr);
+    
 	env->DeleteLocalRef(apiKey_jstr);
 	env->DeleteLocalRef(apiSecret_jstr);
 }
@@ -139,7 +141,9 @@ void s3eApRestart_platform(const char* apiKey, const char* apiSecret)
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring apiKey_jstr = env->NewStringUTF(apiKey);
     jstring apiSecret_jstr = env->NewStringUTF(apiSecret);
+    
     env->CallVoidMethod(g_Obj, g_s3eApRestart, apiKey_jstr, apiSecret_jstr);
+    
 	env->DeleteLocalRef(apiKey_jstr);
 	env->DeleteLocalRef(apiSecret_jstr);
 }
@@ -160,7 +164,9 @@ void s3eApLogEvent_platform(const char* name)
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring name_jstr = env->NewStringUTF(name);
+    
     env->CallVoidMethod(g_Obj, g_s3eApLogEvent, name_jstr);
+    
 	env->DeleteLocalRef(name_jstr);
 }
 
@@ -168,7 +174,11 @@ s3eApDict* s3eApDictCreate_platform()
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
 	jobject dict = env->CallObjectMethod(g_Obj, g_s3eApDictCreate);
-	return (s3eApDict*)env->NewGlobalRef(dict);
+    
+    jobject globalRef = env->NewGlobalRef(dict);
+    
+    env->DeleteLocalRef(dict);
+	return (s3eApDict*)globalRef;
 }
 
 void s3eApDictAddString_platform(s3eApDict* dict, const char* key, const char* value)
@@ -176,7 +186,9 @@ void s3eApDictAddString_platform(s3eApDict* dict, const char* key, const char* v
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring key_jstr = env->NewStringUTF(key);
     jstring value_jstr = env->NewStringUTF(value);
+    
     env->CallVoidMethod(g_Obj, g_s3eApDictAddString, (jobject)dict, key_jstr, value_jstr);
+    
 	env->DeleteLocalRef(key_jstr);
 	env->DeleteLocalRef(value_jstr);
 }
@@ -185,7 +197,9 @@ void s3eApDictAddInt_platform(s3eApDict* dict, const char* key, int value)
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring key_jstr = env->NewStringUTF(key);
+    
     env->CallVoidMethod(g_Obj, g_s3eApDictAddInt, (jobject)dict, key_jstr, value);
+    
 	env->DeleteLocalRef(key_jstr);
 }
 
@@ -193,7 +207,9 @@ void s3eApDictAddFloat_platform(s3eApDict* dict, const char* key, float value)
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring key_jstr = env->NewStringUTF(key);
+    
     env->CallVoidMethod(g_Obj, g_s3eApDictAddFloat, (jobject)dict, key_jstr, value);
+    
 	env->DeleteLocalRef(key_jstr);
 }
 
@@ -201,9 +217,12 @@ void s3eApDictAddDict_platform(s3eApDict* dict, const char* key, s3eApDict* valu
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring key_jstr = env->NewStringUTF(key);
-    env->CallVoidMethod(g_Obj, g_s3eApDictAddDict, (jobject)dict, key_jstr, (jobject)value);
+    jobject value_jobj = (jobject)value;
+    
+    env->CallVoidMethod(g_Obj, g_s3eApDictAddDict, (jobject)dict, key_jstr, value_jobj);
+    
 	env->DeleteLocalRef(key_jstr);
-	env->DeleteGlobalRef((jobject)value);
+	env->DeleteGlobalRef(value_jobj);
 }
 
 void s3eApLogEventWithArgs_platform(const char* name, s3eApDict* dict)
@@ -211,7 +230,9 @@ void s3eApLogEventWithArgs_platform(const char* name, s3eApDict* dict)
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring name_jstr = env->NewStringUTF(name);
 	jobject dict_jobj = (jobject)dict;
+    
     env->CallVoidMethod(g_Obj, g_s3eApLogEventWithArgs, name_jstr, dict_jobj);
+    
 	env->DeleteLocalRef(name_jstr);
 	env->DeleteGlobalRef(dict_jobj);
 }
@@ -220,6 +241,7 @@ void s3eApSetFBAppId_platform(const char* appId)
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     jstring appId_jstr = env->NewStringUTF(appId);
-    env->CallVoidMethod(g_Obj, g_s3eApSetFBAppId, appId_jstr);
+    
+    env->CallVoidMethod(g_Obj, g_s3eApSetFBAppId, appId_jstr);\
 	env->DeleteLocalRef(appId_jstr);
 }
